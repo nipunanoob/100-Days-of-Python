@@ -28,13 +28,13 @@ import day11art
 
 def show_player_cards():
     print(f"Your cards: {player}, current score: {player_value}")
-    print(f"Dealer has drawn {dealer[0]}")
+    print(f"Dealer has drawn {dealer[0]} as his first card")
 
 def bust(name):
-    print(f"{name} has busted a nut")
+    print(f"{name} has busted")
 
 def blackjack(name):
-    print(f"{name} has jacked off a hoe")
+    print(f"{name} got blackjack")
 
 
 
@@ -56,6 +56,10 @@ while(True):
             dealer.append(cards[random.randint(0,12)])
         player_value = sum(player)
         dealer_value = sum(dealer)
+        if player_value == 22:
+            player[0] = 1
+        if dealer_value == 22:
+            dealer[0] == 1
         show_player_cards()
         while(option != 'stay'):
             option = input("Type 'hit' to draw more cards or 'stay' to stop drawing: ")
@@ -69,25 +73,44 @@ while(True):
                     blackjack("You")
                     break
                 elif player_value > 21:
-                    show_player_cards()
-                    bust("You")
-                    break
+                    if 11 in player:
+                        card = player.index(11)
+                        player[card] = 1
+                        player_value = sum(player)
+                        if 11 in player and player_value > 21:
+                            card = player.index(11)
+                            player[card] = 1
+                        elif player_value > 21:
+                            show_player_cards()
+                            bust("You")
+                            print("You lose!")
+                            break
+                        else:
+                            pass
+                        player_value = sum(player)
+                        show_player_cards()
+                    else:
+                        show_player_cards()
+                        bust("You")
+                        print("You lose!")
+                        break
                 else:
                     show_player_cards()
             elif option == 'stay':
                 pass
             else:
                 print("Invalid option!")
-        print(dealer)
         if option == 'stay' or player_value == 21:
+            print(f"Dealer reveals the hidden card, it is {dealer[1]}")
             while dealer_value < 17:
-                dealer.append(cards[random.randint(0,12)])
+                card = cards[random.randint(0,12)]
+                dealer.append(card)
+                print(f"Dealer has drawn {card}")
                 dealer_value = sum(dealer)
                 if dealer_value == 21:
                     blackjack("Dealer")
                 elif dealer_value > 21:
                     bust("Dealer")
-                    print(f"You win!")
                     continue
                 else:
                     pass
