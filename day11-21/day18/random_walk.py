@@ -18,3 +18,4 @@ while True:
         timmy.right(90)
     else:
         timmy.backward(25)
+
