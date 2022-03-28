@@ -44,4 +44,5 @@ while is_running:
         if snake.head.distance(block) < 10:
             is_running = False
             scoreboard.game_over()
+
 screen.exitonclick()
