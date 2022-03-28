@@ -27,6 +27,13 @@ class Snake:
     def extend(self):
         self.add_segment(self.blocks[-1].position())
 
+    def reset(self):
+        for block in self.blocks:
+            block.goto(1000, 1000)
+        self.blocks.clear()
+        self.create_snake()
+        self.head = self.blocks[0]
+
     def move(self):
         for block_num in range(len(self.blocks) - 1, 0, -1):
             new_x = self.blocks[block_num - 1].xcor()

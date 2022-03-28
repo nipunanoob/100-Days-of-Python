@@ -30,6 +30,7 @@ while is_running:
     snake.move()
     if snake.head.distance(food) < 15:
         food.refresh()
+        scoreboard.score += 1
         scoreboard.update_score()
         snake.extend()
 
@@ -37,12 +38,12 @@ while is_running:
             or snake.head.xcor() < -UP_LEFT_WALL_LIMIT\
             or snake.head.ycor() > UP_LEFT_WALL_LIMIT\
             or snake.head.ycor() < -RIGHT_DOWN_WALL_LIMIT:
-        is_running = False
-        scoreboard.game_over()
+        scoreboard.reset()
+        snake.reset()
 
     for block in snake.blocks[1:]:
         if snake.head.distance(block) < 10:
-            is_running = False
-            scoreboard.game_over()
+            scoreboard.reset()
+            snake.reset()
 
 screen.exitonclick()
