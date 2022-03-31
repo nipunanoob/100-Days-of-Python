@@ -32,7 +32,15 @@ while len(guessed_states) < number_of_states:
         guessed_states.append(answer_state)
         states_guessed += 1
 
-pointer.goto(0, 0)
-pointer.write("You got all of the US States", align='Center',font = FONT )
+    if answer_state == 'Exit':
+        states_missed = [state for state in states if state not in guessed_states]
+        df2 = pd.DataFrame(states_missed)
+        df2.columns = ['States']
+        df2.to_csv('states_to_learn.csv')
+        break
 
-screen.exitonclick()
+#states_to_learn.csv
+
+
+
+
