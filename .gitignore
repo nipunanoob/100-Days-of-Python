@@ -2,8 +2,10 @@
 __pycache__/
 *.py[cod]
 *.idea
+*.DS_Store
 # C extensions
 *.so
+*.env
 
 # Distribution / packaging
 bin/
