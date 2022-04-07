@@ -2,11 +2,16 @@ import time
 
 import requests
 from datetime import datetime
+import smtplib
+import os
+from dotenv import load_dotenv
 
 MY_LAT = 10.006170  # Your latitude
 MY_LONG = 76.366501  # Your longitude
 
+
 while True:
+    print("Running ISS overhead notifier script ...")
     response = requests.get(url="http://api.open-notify.org/iss-now.json")
     response.raise_for_status()
     data = response.json()
@@ -30,14 +35,21 @@ while True:
 
     time_now = datetime.now()
 
-    # If the ISS is close to my current position
-    # and it is currently dark
-    # Then send me an email to tell me to look up.
-    # BONUS: run the code every 60 seconds.
+    load_dotenv()
+    my_email = os.getenv('MY_EMAIL')
+    password = os.getenv("PASSWORD")
 
     iss_near_current_pos = abs(MY_LAT - iss_latitude) < 5 and abs(MY_LONG - iss_longitude) < 5
     is_sky_dark = sunset <= time_now.hour <= sunrise
 
-    if iss_near_current_pos:
-        print("Look up in the sky")
+    if iss_near_current_pos and is_sky_dark:
+        with smtplib.SMTP(os.getenv("SMTP"), os.getenv("PORT")) as connection:
+            connection.starttls()
+            connection.login(my_email, password)
+            connection.sendmail(
+                from_addr=my_email,
+                to_addrs=os.getenv("TARGET_EMAIL"),
+                msg=f"Subject: Look up in the sky\n\n The ISS is above you in the sky"
+            )
+
     time.sleep(60)
