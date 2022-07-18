@@ -14,9 +14,6 @@ auth_token = config.twilio_auth_token
 MY_LAT = 9.957620
 MY_LONG = 76.251152
 
-# api_call = "https://api.openweathermap.org/data/2.5/weather?q=Cochin,India&appid=8c2e549074dacf06ab59ec68cce8c2c0"
-
-
 OWM_Endpoint = "https://api.openweathermap.org/data/2.5/onecall"
 weather_params = {
     "lat": MY_LAT,

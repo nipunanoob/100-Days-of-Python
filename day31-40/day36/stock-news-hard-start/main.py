@@ -1,4 +1,3 @@
-
 from dotenv import load_dotenv
 import requests
 import os
@@ -70,6 +69,7 @@ if abs(diff_percent) >= 5:
 
     twilio_sid = os.getenv('TWILIO_ACCOUNT_SID')
     twilio_auth_token = os.getenv('TWILIO_AUTH_TOKEN')
+    contact_no = os.getenv('PHONE_NO')
 
     client = Client(twilio_sid, twilio_auth_token)
 
@@ -78,7 +78,7 @@ if abs(diff_percent) >= 5:
                     .create(
                         body=article,
                         from_='+18302132262',
-                        to='+919539903173'
+                        to=contact_no
                     )
 
     print(message.sid)
