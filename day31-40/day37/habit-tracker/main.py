@@ -32,19 +32,19 @@ request_headers = {
 # response = requests.post(url=pixela_graph_endpoint,json=graph_config,headers=headers)
 # print(response.text)
 
-# today = date.today()
-# yesterday = (today - timedelta(1)).strftime("%Y%m%d")
+today = date.today()
+sleep_day = (today - timedelta(0)).strftime("%Y%m%d")
 
-today = date.today().strftime("%Y%m%d")
+# today = date.today().strftime("%Y%m%d")
 
 
 
 selected_graph_endpoint = f"{pixela_graph_endpoint}/{graph_id}"
 selected_graph_add_pixel_config = {
-    'date': today,
-    'quantity': input("How mnay hours did you sleep yesterday?")
+    'date': sleep_day,
+    'quantity': input(f"How many hours did you sleep day before {sleep_day}")
 }
-
+print(selected_graph_add_pixel_config)
 #Creates pixel
 response = requests.post(url=selected_graph_endpoint, json=selected_graph_add_pixel_config, headers=request_headers)
 print(response.text)
